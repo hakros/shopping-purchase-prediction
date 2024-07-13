@@ -3,6 +3,7 @@ import sys
 
 from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
+from pickle import dump
 
 TEST_SIZE = 0.4
 
@@ -23,6 +24,9 @@ def main():
     model = train_model(X_train, y_train)
     predictions = model.predict(X_test)
     sensitivity, specificity = evaluate(y_test, predictions)
+
+    with open("filename.pkl", "wb") as f:
+        dump(model, f, protocol=5)
 
     # Print results
     print(f"Correct: {(y_test == predictions).sum()}")
